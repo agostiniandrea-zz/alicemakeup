@@ -15,7 +15,12 @@ export default class SectionPage extends Component {
 
     getOptions(options) {
         return options && options.map((option) => (
-            <Option key={option.order} title={option.description} />
+            <Option
+                key={option.order}
+                onClick={() => { option.selected ? this.props.removeOption(option.id) : this.props.addOption(option.id) }}
+                selected={option.selected}
+                title={option.description}
+            />
         ));
     }
 
@@ -52,6 +57,8 @@ export default class SectionPage extends Component {
 }
 
 SectionPage.propTypes = {
+    addOption: PropTypes.func,
     current: PropTypes.object,
-    loading: PropTypes.bool
+    loading: PropTypes.bool,
+    removeOption: PropTypes.func
 };

@@ -5,7 +5,9 @@ import { endLoading } from 'Modules/loading';
 // ------------------------------------
 // CONSTANTS
 // ------------------------------------
+export const ADD_OPTION = 'SECTIONS/ADD_OPTION';
 export const INIT_DATA = 'SECTIONS/INIT_DATA';
+export const REMOVE_OPTION = 'SECTIONS/REMOVE_OPTION';
 export const SET_DATA = 'SECTIONS/SET_DATA';
 export const UNLOCK = 'SECTIONS/UNLOCK';
 
@@ -14,8 +16,14 @@ export const UNLOCK = 'SECTIONS/UNLOCK';
 // ------------------------------------
 export default function reducer(state = -1, action) {
     switch (action.type) {
+        case ADD_OPTION: {
+            return addOptionFunc(state, action.payload);
+        }
         case INIT_DATA: {
             return initDataFunc(action.payload);
+        }
+        case REMOVE_OPTION: {
+            return removeOptionFunc(state, action.payload);
         }
         case SET_DATA: {
             return setDataFunc(state, action.payload);
@@ -31,10 +39,9 @@ export default function reducer(state = -1, action) {
 // ------------------------------------
 // ACTIONS
 // ------------------------------------
-export const initData = (payload) => {
-    return { type: INIT_DATA, payload: payload };
-};
-
+export const addOption = (state, payload) => {
+    return { type: ADD_OPTION, payload: payload };
+}
 export const getData = (id) => {
     return (dispatch/* , getState */) => new Promise((resolve, reject) => {
         Api.getModel(id)
@@ -48,6 +55,12 @@ export const getData = (id) => {
             });
     });
 };
+export const initData = (payload) => {
+    return { type: INIT_DATA, payload: payload };
+};
+export const removeOption = (state, payload) => {
+    return { type: REMOVE_OPTION, payload: payload };
+}
 export const setData = (payload) => {
     return { type: SET_DATA, payload: payload };
 };
@@ -59,6 +72,12 @@ export const unlock = (payload) => {
 // FUNCTIONS
 // ------------------------------------
 
+function addOptionFunc(state, payload) {
+    let newState = _.cloneDeep(state);
+    //to do
+    return newState;
+}
+
 function initDataFunc(payload) {
     let newState = _.cloneDeep(payload);
     let obj = [];
@@ -69,6 +88,12 @@ function initDataFunc(payload) {
         });
     }
     return obj;
+}
+
+function removeOptionFunc(state, payload) {
+    let newState = _.cloneDeep(state);
+    //to do
+    return newState;
 }
 
 function setDataFunc(state, payload) {
@@ -129,7 +154,10 @@ function getOptionsBySubcategory(optObj, id) {
     let options = [];
     for (let opt in optObj) {
         if (optObj[opt].subCategoryID == id) {
-            options.push(optObj[opt]);
+            options.push({
+                ...optObj[opt],
+                selected: false
+            });
         }
     }
     return _.orderBy(options, ['order']);

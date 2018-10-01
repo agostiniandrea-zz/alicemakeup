@@ -13,5 +13,9 @@
     },
     "modelsPage": {
         "title": "Buongiorno a tutti! Mi chiamo %(fullName)s!"
+    },
+    "option": {
+        "selected": "Selezionato",
+        "unselected": "Seleziona"
     }
 }

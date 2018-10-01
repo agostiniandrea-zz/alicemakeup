@@ -1,9 +1,10 @@
 @import "../../../../scss/Variables.scss";
 
 section.option{
-    margin: 20px 0;
-    padding: 20px;
     border: 1px solid $base-border;
+    margin: 20px 0;
+    min-height: 100px;
+    padding: 20px;
 }
 
 @media (min-width: $screen-sm-min) {
